@@ -11,7 +11,6 @@ import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import SoundToggle from "@/components/ui/SoundToggle";
 import CommandPalette from "@/components/ui/CommandPalette";
-import DoodleField from "@/components/ui/DoodleField";
 
 export default function Home() {
   return (
@@ -26,9 +25,6 @@ export default function Home() {
         aria-hidden
         className="bg-vgrid pointer-events-none fixed inset-0 -z-10 mx-auto max-w-7xl"
       />
-
-      {/* ambient, mouse-reactive doodles behind all content */}
-      <DoodleField />
 
       <main className="relative">
         <Hero />
