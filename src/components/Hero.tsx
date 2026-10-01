@@ -129,7 +129,7 @@ export default function Hero() {
         >
           <div className="relative border-2 border-ink bg-paper shadow-hard">
             <Image
-              src="/profile.jpg"
+              src={(process.env.NEXT_PUBLIC_BASE_PATH || "") + "/profile.jpg"}
               alt="Sakash Srivastava"
               width={827}
               height={1063}

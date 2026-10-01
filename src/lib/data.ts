@@ -28,7 +28,7 @@ export const profile = {
   location: "New Delhi, India · Open to on-site & remote",
   email: "sakashsrivastava06@gmail.com",
   phone: "+91 95605 57446",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: (process.env.NEXT_PUBLIC_BASE_PATH || "") + "/resume.pdf",
 };
 
 export type SocialLink = {

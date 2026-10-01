@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const SRC = "/music.mp3"; // falls back to a generated pad if missing
+const SRC = (process.env.NEXT_PUBLIC_BASE_PATH || "") + "/music.mp3"; // basePath-aware; falls back to a generated pad if missing
 const MAX_VOL = 0.55;
 const START = 42.72; // start in the silent gap; "First" attack hits at 42.80
 
