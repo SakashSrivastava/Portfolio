@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { profile } from "@/lib/data";
-import { Sparkle, Orbit, Asterisk } from "./ui/Doodles";
+import { Sparkle, Asterisk } from "./ui/Doodles";
 
 const loop = [
   { n: "01", label: "BUILD", pos: "left-[-14px] top-6" },
@@ -32,7 +32,6 @@ export default function Hero() {
       <div className="relative mt-10 grid items-center gap-10 lg:mt-6 lg:grid-cols-[minmax(0,1.5fr)_300px]">
         {/* doodles */}
         <Sparkle className="pointer-events-none absolute right-[42%] top-[-6px] z-20 h-7 w-7 animate-float text-flame" />
-        <Orbit className="pointer-events-none absolute bottom-24 left-[36%] z-20 hidden h-12 w-12 animate-spinSlow text-ink/60 sm:block" />
         <Asterisk className="pointer-events-none absolute left-[-6px] top-28 z-20 hidden h-6 w-6 text-flame sm:block" />
 
         {/* left: name + copy */}
