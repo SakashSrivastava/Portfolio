@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SRC = (process.env.NEXT_PUBLIC_BASE_PATH || "") + "/music.mp3"; // basePath-aware; falls back to a generated pad if missing
 const MAX_VOL = 0.55;
@@ -12,6 +13,7 @@ export default function SoundToggle() {
   const [ready, setReady] = useState(false);
   const [on, setOn] = useState(false);
   const [hover, setHover] = useState(false);
+  const [hintHidden, setHintHidden] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeRef = useRef<number | null>(null);
@@ -179,32 +181,65 @@ export default function SoundToggle() {
   if (!ready) return null;
 
   const expanded = on || hover;
+  const showHint = !on && !hintHidden;
 
   return (
-    <button
-      onClick={toggle}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      aria-label={on ? "Mute sound" : "Play sound"}
-      className={`group fixed bottom-5 right-5 z-50 flex h-11 items-center gap-2 overflow-hidden border-2 border-ink px-3 transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hard-sm ${
-        on ? "bg-flame text-paper" : "bg-paper text-ink"
-      }`}
-    >
-      <div className={`eq ${on ? "" : "eq-idle"}`} aria-hidden>
-        <span className="eq-bar" style={{ animationDelay: "0s" }} />
-        <span className="eq-bar" style={{ animationDelay: "0.25s" }} />
-        <span className="eq-bar" style={{ animationDelay: "0.1s" }} />
-        <span className="eq-bar" style={{ animationDelay: "0.4s" }} />
-        <span className="eq-bar" style={{ animationDelay: "0.18s" }} />
-      </div>
+    <>
+      {/* one-time hint: tells the visitor there's music, points at the button */}
+      <AnimatePresence>
+        {showHint && (
+          <motion.button
+            key="sound-hint"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => {
+              if (!on) startSound();
+              setHintHidden(true);
+            }}
+            className="fixed bottom-[74px] right-5 z-50 flex items-center gap-2 border-2 border-ink bg-flame px-3 py-2 text-ink shadow-hard-sm"
+          >
+            <div className="eq" aria-hidden>
+              <span className="eq-bar" style={{ animationDelay: "0s" }} />
+              <span className="eq-bar" style={{ animationDelay: "0.2s" }} />
+              <span className="eq-bar" style={{ animationDelay: "0.1s" }} />
+            </div>
+            <span className="mono text-[10px] font-bold">
+              This site has music · click to play
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
-      <span
-        className={`mono whitespace-nowrap text-[10px] transition-all duration-200 ${
-          expanded ? "max-w-[90px] opacity-100" : "max-w-0 opacity-0"
+      <button
+        onClick={() => {
+          setHintHidden(true);
+          toggle();
+        }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        aria-label={on ? "Mute sound" : "Play sound"}
+        className={`group fixed bottom-5 right-5 z-50 flex h-11 items-center gap-2 overflow-hidden border-2 border-ink px-3 transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hard-sm ${
+          on ? "bg-flame text-paper" : "bg-paper text-ink"
         }`}
       >
-        {on ? "Now playing" : "Play sound"}
-      </span>
-    </button>
+        <div className={`eq ${on ? "" : "eq-idle"}`} aria-hidden>
+          <span className="eq-bar" style={{ animationDelay: "0s" }} />
+          <span className="eq-bar" style={{ animationDelay: "0.25s" }} />
+          <span className="eq-bar" style={{ animationDelay: "0.1s" }} />
+          <span className="eq-bar" style={{ animationDelay: "0.4s" }} />
+          <span className="eq-bar" style={{ animationDelay: "0.18s" }} />
+        </div>
+
+        <span
+          className={`mono whitespace-nowrap text-[10px] transition-all duration-200 ${
+            expanded ? "max-w-[90px] opacity-100" : "max-w-0 opacity-0"
+          }`}
+        >
+          {on ? "Now playing" : "Play sound"}
+        </span>
+      </button>
+    </>
   );
 }
