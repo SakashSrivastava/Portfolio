@@ -1,128 +1,85 @@
 # Sakash Srivastava — Portfolio
 
-A premium, interactive personal portfolio built with **Next.js 14 (App Router)**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and **Lucide** icons. Dark, solid color theme with an optional light mode, an interactive mouse-reactive particle background, magnetic buttons, 3D-tilt project cards, an animated experience timeline, and a working contact form, all respecting `prefers-reduced-motion`.
+Personal portfolio of **Sakash Srivastava**, a Machine Learning & AI engineer. A fast, editorial / brutalist single-page site built with **Next.js 14**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
+
+Live site: _add your Vercel URL here_
 
 ---
 
+## Stack
+
+- **Next.js 14** (App Router) + **TypeScript**
+- **Tailwind CSS** — custom cream / ink / molten-orange theme
+- **Framer Motion** — entrance, scroll, and hover animations
+- **Lucide** icons · **Archivo** (display) + **Inter** (body) + **JetBrains Mono** (labels)
+
 ## Features
 
-- **Hero** with animated entrance, particle network, glowing gradients, live stats, and CTAs (View Projects, Download Resume, Contact).
-- **About** with story-driven copy + three "how I work" pillars.
-- **Projects** — interactive tilt cards with expandable case studies, status badges, tech stacks, and GitHub/Demo links.
-- **Skills** — six categories with animated proficiency bars.
-- **Experience** — vertical timeline with a scroll-progress spine that fills as you scroll.
-- **Research & Learning** — papers studied + domains being explored.
-- **Achievements** — verifiable highlights (J.P. Morgan HireVue, Adobe top 5%, T&P shortlist, etc.).
-- **Contact** — elegant form that opens the visitor's mail client (no backend needed) + direct links.
-- Floating glass navbar, scroll-progress bar, custom scrollbar, light/dark toggle, fully responsive.
+- Giant layered editorial hero with an annotated photo
+- `⌘K` / `Ctrl+K` command palette for navigation
+- Interactive flip-card **Proof** section (tap a number to see what it means)
+- Seamless, GPU-composited footer marquee
+- Ambient music that starts on first interaction, with a mute toggle and an animated equalizer (falls back to a generated pad if the audio file is missing)
+- Working contact form that sends straight to the inbox via **Web3Forms** (no backend)
+- Fully responsive, honors `prefers-reduced-motion`
 
 ---
 
 ## Run locally
 
 ```bash
-# 1. install dependencies (already done once)
 npm install
-
-# 2. start the dev server
-npm run dev
-# open http://localhost:3000
-
-# production build / preview
-npm run build
-npm start
+npm run dev        # http://localhost:3000
 ```
 
-> Requires Node 18.18+ (you're on Node 24 — perfect).
-
----
-
-## Deploy on Vercel
-
-1. Push this folder to a GitHub repo:
 ```bash
-git init
-git add .
-git commit -m "Initial portfolio"
-git branch -M main
-git remote add origin https://github.com/Sakash-Srivastava/portfolio.git
-git push -u origin main
+npm run build      # production build
+npm start          # serve the production build
 ```
-2. Go to **https://vercel.com/new**, import the repo.
-3. Framework preset auto-detects **Next.js** — no env vars or config needed. Click **Deploy**.
-4. (Optional) Add a custom domain under **Settings → Domains**.
 
-Alternatively, one-shot from the CLI:
-```bash
-npm i -g vercel
-vercel        # follow prompts
-vercel --prod # promote to production
-```
+> Requires Node 18.18+.
 
 ---
 
-## Project structure
+## Deploy (Vercel)
+
+1. Push to GitHub.
+2. Go to **vercel.com/new**, import the repo.
+3. Vercel auto-detects Next.js — **no env vars or custom settings needed**. Click **Deploy**.
+
+Every push to `main` auto-redeploys. Add a custom domain under **Settings → Domains**.
+
+---
+
+## Customize
+
+Almost all content lives in one file: [`src/lib/data.ts`](src/lib/data.ts) (profile, projects, skills, experience, research, proof numbers, achievements, socials).
+
+| What | Where |
+| --- | --- |
+| Text content | `src/lib/data.ts` |
+| Contact form key | `WEB3FORMS_KEY` in `src/components/Contact.tsx` |
+| Background music | `public/music.mp3` + `START` in `src/components/ui/SoundToggle.tsx` |
+| Resume (PDF) | `public/resume.pdf` |
+| Profile photo | `public/profile.jpg` |
+| Colors / fonts | `tailwind.config.ts`, `src/app/globals.css`, `src/app/layout.tsx` |
+
+### Structure
 
 ```
-Portfolio Sakash/
-├─ public/
-│  └─ resume.pdf            # your CV (already copied here)
-├─ src/
-│  ├─ app/
-│  │  ├─ layout.tsx         # fonts (Inter + Sora), metadata, html theme class
-│  │  ├─ page.tsx           # assembles all sections
-│  │  └─ globals.css        # Tailwind layers, glass utility, scrollbar, reduced-motion
-│  ├─ components/
-│  │  ├─ Navbar.tsx
-│  │  ├─ Hero.tsx
-│  │  ├─ About.tsx
-│  │  ├─ Projects.tsx
-│  │  ├─ Skills.tsx
-│  │  ├─ Timeline.tsx
-│  │  ├─ Research.tsx
-│  │  ├─ Achievements.tsx
-│  │  ├─ Contact.tsx
-│  │  ├─ Footer.tsx
-│  │  └─ ui/
-│  │     ├─ MagneticButton.tsx
-│  │     ├─ CursorGlow.tsx
-│  │     ├─ ScrollProgress.tsx
-│  │     ├─ ParticleField.tsx
-│  │     ├─ SectionHeading.tsx
-│  │     └─ TiltCard.tsx
-│  └─ lib/
-│     └─ data.ts            # ← single source of truth. Edit content here.
-├─ tailwind.config.ts
-├─ next.config.mjs
-├─ tsconfig.json
-└─ package.json
+src/
+├─ app/           layout.tsx · page.tsx · globals.css
+├─ components/     Navbar, Hero, About, Projects, Skills, Timeline,
+│  │               Research, Proof, Contact, Footer
+│  └─ ui/          CommandPalette, SoundToggle, MagneticButton,
+│                  SectionHeading, ScrollProgress, Doodles
+└─ lib/
+   └─ data.ts     ← single source of truth
 ```
 
 ---
 
-## How to customize
+## Notes
 
-**Almost everything lives in [`src/lib/data.ts`](src/lib/data.ts).** Edit that one file to update:
-- Profile (name, headline, email, phone, location)
-- Social links (GitHub / LinkedIn — **update the LinkedIn URL slug**)
-- Projects, skills, timeline, research, achievements, hero stats
-
-Colors/animation live in `tailwind.config.ts` and `globals.css`.
-
----
-
-## What to add later (checklist)
-
-- [ ] **LinkedIn URL** — in `data.ts`, `socials[1].href` currently guesses your slug. Replace with your real profile URL.
-- [ ] **GitHub project links** — each project links to your GitHub root; point them at the actual repos.
-- [ ] **Live demos** — add a `{ label: "Live Demo", href: "..." }` link to the Bengaluru predictor once the Flask app is hosted.
-- [ ] **Resume** — `public/resume.pdf` is your current CV. Re-export and replace whenever it changes.
-- [ ] **Project images** — cards use gradient placeholders. To use real screenshots, drop images in `public/` and render an `<img>` in the cover area of `Projects.tsx`.
-- [ ] **Open Graph image** — add `public/og.png` (1200×630) and reference it in `layout.tsx` `openGraph.images` for rich link previews.
-- [ ] **Sneaker Authenticity Checker** — marked "In progress"; flip to "Shipped" and add a repo when ready.
-- [ ] **Custom domain** — e.g. `sakash.dev`, configured in Vercel.
-- [ ] **Analytics** (optional) — add Vercel Analytics or Plausible.
-
----
-
-Built with care. Curiosity → learning → real projects → leadership → what's next.
+- **Contact form:** powered by Web3Forms. The access key is public by design (safe to commit). If submissions fail on a live domain, add that domain under Domain Restriction in the Web3Forms dashboard.
+- **Music:** `public/music.mp3` is a personal audio clip. If you deploy publicly, use a track you have the rights to (or a royalty-free one) to avoid copyright issues.
