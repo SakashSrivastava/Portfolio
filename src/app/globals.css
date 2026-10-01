@@ -21,7 +21,9 @@ html {
 }
 
 body {
-  background-color: var(--paper);
+  /* transparent on purpose: the paper bg lives on <html> so the fixed -z-10
+     doodle/grid layer stays visible behind the (normal-flow) content. */
+  background-color: transparent;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
