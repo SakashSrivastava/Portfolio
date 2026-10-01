@@ -25,16 +25,16 @@ type Def = {
 // Scattered around the viewport, weighted toward the edges. Low opacity so
 // they read as ambient texture behind the content, never over it.
 const ITEMS: Def[] = [
-  { C: Sparkle, top: "13%", left: "6%", size: 26, depth: 30, cls: "text-flame/40", anim: "float", delay: 0 },
-  { C: Orbit, top: "21%", left: "89%", size: 56, depth: 46, cls: "text-ink/15", anim: "spin", delay: 0 },
-  { C: Asterisk, top: "45%", left: "3%", size: 22, depth: 38, cls: "text-flame/35", anim: "float", delay: 0.6 },
-  { C: Squiggle, top: "60%", left: "92%", size: 62, depth: 28, cls: "text-ink/15", anim: "float", delay: 1.1 },
-  { C: Sparkle, top: "82%", left: "9%", size: 20, depth: 42, cls: "text-flame/35", anim: "float", delay: 0.3 },
-  { C: Scribble, top: "88%", left: "80%", size: 72, depth: 22, cls: "text-ink/12", anim: "float", delay: 1.6 },
-  { C: Asterisk, top: "72%", left: "47%", size: 18, depth: 52, cls: "text-flame/25", anim: "spin", delay: 0 },
-  { C: Orbit, top: "5%", left: "53%", size: 34, depth: 34, cls: "text-ink/12", anim: "spin", delay: 0 },
-  { C: Sparkle, top: "36%", left: "71%", size: 22, depth: 46, cls: "text-flame/30", anim: "float", delay: 0.9 },
-  { C: Squiggle, top: "52%", left: "27%", size: 52, depth: 18, cls: "text-ink/10", anim: "float", delay: 1.3 },
+  { C: Sparkle, top: "13%", left: "6%", size: 30, depth: 30, cls: "text-flame/80", anim: "float", delay: 0 },
+  { C: Orbit, top: "21%", left: "89%", size: 60, depth: 46, cls: "text-ink/35", anim: "spin", delay: 0 },
+  { C: Asterisk, top: "45%", left: "3%", size: 26, depth: 38, cls: "text-flame/70", anim: "float", delay: 0.6 },
+  { C: Squiggle, top: "60%", left: "92%", size: 66, depth: 28, cls: "text-ink/30", anim: "float", delay: 1.1 },
+  { C: Sparkle, top: "82%", left: "9%", size: 24, depth: 42, cls: "text-flame/70", anim: "float", delay: 0.3 },
+  { C: Scribble, top: "88%", left: "80%", size: 78, depth: 22, cls: "text-ink/30", anim: "float", delay: 1.6 },
+  { C: Asterisk, top: "72%", left: "47%", size: 22, depth: 52, cls: "text-flame/55", anim: "spin", delay: 0 },
+  { C: Orbit, top: "6%", left: "53%", size: 38, depth: 34, cls: "text-ink/30", anim: "spin", delay: 0 },
+  { C: Sparkle, top: "36%", left: "71%", size: 26, depth: 46, cls: "text-flame/65", anim: "float", delay: 0.9 },
+  { C: Squiggle, top: "52%", left: "27%", size: 56, depth: 18, cls: "text-ink/25", anim: "float", delay: 1.3 },
 ];
 
 function Item({
