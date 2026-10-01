@@ -5,7 +5,7 @@
 :root {
   --paper: #f4f1ea;
   --ink: #17150f;
-  --line: rgba(23, 21, 15, 0.14);
+  --line: rgba(23, 21, 15, 0.07);
 }
 
 html {
