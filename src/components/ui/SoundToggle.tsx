@@ -146,26 +146,26 @@ export default function SoundToggle() {
     setOn(false);
   };
 
-  // Try to autoplay on load; if the browser blocks it (no gesture yet), start
-  // on the visitor's very first interaction (click, scroll, move, or key).
+  // Browsers block audio until a real user gesture. Mouse-move and scroll do
+  // NOT count — only click / tap / keypress do. So start on the first real
+  // gesture, and keep the listeners armed until playback actually succeeds.
   useEffect(() => {
-    const kick = () => {
+    const events = ["pointerdown", "click", "keydown", "touchend"];
+    const kick = async () => {
       if (autoDoneRef.current) return;
-      startSound();
-      remove();
+      await startSound();
+      if (autoDoneRef.current) {
+        events.forEach((e) => window.removeEventListener(e, kick));
+      }
     };
-    const events = ["pointerdown", "pointermove", "keydown", "touchstart", "wheel"];
-    const remove = () =>
-      events.forEach((e) => window.removeEventListener(e, kick));
-
-    // best-effort autoplay the moment the page mounts
-    const id = window.setTimeout(() => startSound(), 150);
-    events.forEach((e) =>
-      window.addEventListener(e, kick, { once: false, passive: true })
-    );
+    // best-effort autoplay on load (works only where the browser allows it)
+    const id = window.setTimeout(() => {
+      if (!autoDoneRef.current) startSound();
+    }, 150);
+    events.forEach((e) => window.addEventListener(e, kick, { passive: true }));
     return () => {
       window.clearTimeout(id);
-      remove();
+      events.forEach((e) => window.removeEventListener(e, kick));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
