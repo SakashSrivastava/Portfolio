@@ -1,0 +1,8 @@
+Replace this folder's resume.pdf with your real CV.
+
+The "Download Resume" buttons point to /resume.pdf.
+Copy your CV here and rename it to exactly: resume.pdf
+
+  cp "../Sakash_Srivastava_CV.pdf" "./resume.pdf"
+
+(Your CV PDF already lives one level up in the project root.)
