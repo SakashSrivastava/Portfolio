@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SRC = (process.env.NEXT_PUBLIC_BASE_PATH || "") + "/music.mp3"; // basePath-aware; falls back to a generated pad if missing
-const MAX_VOL = 0.55;
+const MAX_VOL = 0.3; // kept gentle so it's ambient, not loud
 const START = 42.72; // start in the silent gap; "First" attack hits at 42.80
 
 type Mode = "file" | "gen" | null;
@@ -22,6 +22,7 @@ export default function SoundToggle() {
   const genNodesRef = useRef<OscillatorNode[]>([]);
   const modeRef = useRef<Mode>(null);
   const autoDoneRef = useRef(false);
+  const onRef = useRef(false);
 
   useEffect(() => {
     setReady(true);
@@ -48,6 +49,27 @@ export default function SoundToggle() {
       });
       ctxRef.current?.close().catch(() => {});
     };
+  }, []);
+
+  // keep a ref copy of `on` so the once-registered listener sees current state
+  useEffect(() => {
+    onRef.current = on;
+  }, [on]);
+
+  // Pause when the tab/app is backgrounded; resume when it's active again.
+  useEffect(() => {
+    const onVis = () => {
+      if (!onRef.current) return;
+      if (document.hidden) {
+        if (modeRef.current === "file") audioRef.current?.pause();
+        else ctxRef.current?.suspend().catch(() => {});
+      } else {
+        if (modeRef.current === "file") audioRef.current?.play().catch(() => {});
+        else ctxRef.current?.resume().catch(() => {});
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
   const fadeAudio = (target: number, done?: () => void, ms = 900) => {
